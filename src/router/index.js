@@ -9,7 +9,7 @@ const router = createRouter({
     }, {
         path: "/index",
         name: "index",
-        component: () => import( "@/views/demo/Student.vue"),
+        component: () => import( "@/views/demo/BaseLayout.vue"),
     }]
 })
 

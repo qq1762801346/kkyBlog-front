@@ -4,22 +4,18 @@ import {actions} from './actions'
 
 const store = createStore({
     state:{
-         typeId: 'user001',
-         showName: true,
-         count: 0,
-         user:{
-            name: 'joy',
-            pwd: '123456'
+         menu: {
+             isCollapse: false,
+             tabs: []
          }
     },
     getters:{
-        getId(state){
-            return state.typeId
+        getIsCollapse(state) {
+            return state.menu.isCollapse
         },
-        getUser(state){
-            return state.user
+        getTabs(state) {
+            return state.menu.tabs
         }
- 
     },
     mutations,
     actions

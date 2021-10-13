@@ -1,12 +1,15 @@
 <template>
-    <div v-for="item in prop.menuList">
-        <!-- 如果当前有子菜单，则显示 el-sub-menu ，在el-sub-menu 里调用 递归组件 -->
+    <template v-for="item in prop.menuList">
+        <!-- 如果当前有子菜单，则显示 el-sub-menu ，在el-sub-menu 递归调用组件 -->
         <el-sub-menu
                 v-if='item.children != null'
                 :index='item.menuName'
                 :key="item.id"
         >
-            <template #title>{{item.menuName}}</template>
+            <template #title>
+                <i :class="item.menuIcon"></i>
+                <span>{{ item.menuName }}</span>
+            </template>
             <!-- 调用自身  此处是重点-->
             <tree-menu :menuList='item.children'></tree-menu>
         </el-sub-menu>
@@ -15,17 +18,16 @@
                 v-else
                 :index='item.menuName'
                 :key='item.id'
-        >{{item.menuName}}
+                @click="toRouter(item)"
+        >
+            <i :class="item.menuIcon"></i>
+            <span>{{ item.menuName }}</span>
         </el-menu-item>
-    </div>
+    </template>
 </template>
 
 <script setup>
-    import {defineProps, onMounted} from "@vue/runtime-core";
-
-    onMounted(() => {
-        console.log(prop.menuList)
-    })
+    import {defineProps} from "@vue/runtime-core";
 
     const prop = defineProps({
         menuList: {
@@ -33,6 +35,10 @@
             default: null
         }
     })
+
+    const toRouter = (item) => {
+        console.log(item.menuName)
+    }
 
 </script>
 
