@@ -45,6 +45,7 @@
     import {getCurrentInstance, onMounted} from "@vue/runtime-core";
     import { ElMessage } from 'element-plus'
     import { useRouter } from "vue-router";
+    import store from '@/store'
 
     onMounted(() => {
         getCaptcha()
@@ -96,6 +97,8 @@
                 let md5Login = Object.assign({}, loginForm)
                 md5Login.userPwd = md5(md5Login.userPwd)
                 loginApi(md5Login).then(res => {
+                    store.state.user = res.data
+                    localStorage.setItem("Kky-Token", store.state.user.token)
                     ElMessage({
                         message: res.msg,
                         type: 'success'

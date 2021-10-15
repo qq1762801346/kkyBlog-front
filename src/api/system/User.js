@@ -41,3 +41,13 @@ export const detailApi = (id) => {
         }
     })
 }
+
+export const deleteApi = (ids) => {
+    return axios({
+        url: 'kky-system/user/delete',
+        method: 'get',
+        params: {
+            ids
+        }
+    })
+}

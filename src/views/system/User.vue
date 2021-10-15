@@ -60,9 +60,9 @@
 <script setup>
     import BasicContainer from '@/components/layout/BasicContainer.vue'
     import {reactive, ref} from "@vue/reactivity";
-    import {listApi, submitApi, detailApi} from '@/api/system/User.js'
+    import {listApi, submitApi, detailApi, deleteApi} from '@/api/system/User.js'
     import {onMounted} from "@vue/runtime-core";
-    import {ElMessage} from "element-plus";
+    import {ElMessage, ElMessageBox} from "element-plus";
     import md5 from 'js-md5'
 
     onMounted(() => {
@@ -146,7 +146,16 @@
 
     /* 单条删除 */
     const deleteOne = (row) => {
-        console.log(row.id)
+        ElMessageBox.confirm('确认删除该条记录', '提示', {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }).then(() => {
+            deleteApi(row.id).then(res => {
+                ElMessage.success("删除成功")
+                list()
+            })
+        })
     }
 
     /* 多选框 */

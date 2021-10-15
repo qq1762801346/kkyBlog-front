@@ -3,23 +3,31 @@ import {mutations} from './mutations'
 import {actions} from './actions'
 
 const store = createStore({
-    state:{
-         menu: {
-             isCollapse: false,
-             tabs: [
-                 {
-                     title: '首页',
-                     name: 'home'
-                 }
-             ]
-         }
+    state: {
+        user: {},
+        menu: {
+            isCollapse: false,
+            tabs: [
+                {
+                    title: '首页',
+                    name: 'home'
+                }
+            ]
+        }
     },
-    getters:{
+    getters: {
         getIsCollapse(state) {
             return state.menu.isCollapse
         },
         getTabs(state) {
             return state.menu.tabs
+        },
+        getUser(state) {
+            return state.user
+        },
+        getToken(state) {
+            if(!state.user.token) return localStorage.getItem("Kky-Token")
+            else return state.user.token
         }
     },
     mutations,
