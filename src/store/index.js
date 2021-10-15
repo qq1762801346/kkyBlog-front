@@ -6,7 +6,12 @@ const store = createStore({
     state:{
          menu: {
              isCollapse: false,
-             tabs: []
+             tabs: [
+                 {
+                     title: '首页',
+                     name: 'home'
+                 }
+             ]
          }
     },
     getters:{

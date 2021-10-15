@@ -1,6 +1,6 @@
 <template>
     <basic-container>
-        欢迎
+        测试
     </basic-container>
 </template>
 

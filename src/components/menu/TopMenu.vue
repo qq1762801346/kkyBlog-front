@@ -6,7 +6,7 @@
                 <expand v-else class="top-menu-icon" @click="changeMenu"/>
             </el-col>
             <el-col :lg="2" :md="2" :sm="3" :xs="4">
-                <router-link to="" class="flex-box router-link">
+                <router-link to="/system/home" class="flex-box router-link">
                     <grid class="top-menu-icon"/>
                     <span style="margin-left: 5px;line-height: 19px;">首页</span>
                 </router-link>
@@ -27,7 +27,6 @@
         () => store.getters.getIsCollapse,
         (newVal, oldVal) => {
             isCollapse.value = newVal
-            console.log(isCollapse.value)
         }
     )
 

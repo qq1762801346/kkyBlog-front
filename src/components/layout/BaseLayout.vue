@@ -1,13 +1,13 @@
 <template>
     <div>
         <el-row class="tac">
-            <el-col :span="left" class="hidden-sm-only hidden-xs-only">
+            <el-col :xl="left" :lg="left" :md="0" :sm="0" :xs="0" class="hidden-sm-only hidden-xs-only">
                 <left-menu class="left-menu hidden-sm-only hidden-xs-only" :isCollapse="isCollapse"></left-menu>
             </el-col>
-            <el-col :span="right">
+            <el-col :xl="right" :lg="right" :md="24" :sm="24" :xs="24">
                 <top-menu class="top-menu" :isCollapse="isCollapse"></top-menu>
-                <tabs-menu class="tabs-menu"></tabs-menu>
-                <router-view></router-view>
+                <tabs-menu class="tabs-menu hidden-sm-only hidden-xs-only"></tabs-menu>
+                <router-view class="main-view"></router-view>
             </el-col>
         </el-row>
     </div>
@@ -52,4 +52,11 @@
         margin-top: 10px;
         padding: 15px;
     }
+
+    .main-view {
+        height: 850px;
+        padding: 20px;
+        background-color: #EBEDF0;
+    }
+
 </style>

@@ -28,6 +28,9 @@
 
 <script setup>
     import {defineProps} from "@vue/runtime-core";
+    import {useRouter} from "vue-router";
+
+    const router = useRouter();
 
     const prop = defineProps({
         menuList: {
@@ -37,7 +40,7 @@
     })
 
     const toRouter = (item) => {
-        console.log(item.menuName)
+        router.push(item.menuRouter)
     }
 
 </script>

@@ -8,19 +8,19 @@
                 <div class="right-content">
                     <div class="login-box-title">管理系统</div>
                     <el-form ref="loginRef" :model="loginForm" :rules="loginRules">
-                        <el-form-item prop="account">
+                        <el-form-item prop="userAcc">
                             <el-input v-model="loginForm.userAcc" size="medium" placeholder="请输入登录账号"
-                                      prefix-icon="el-icon-user" clearable></el-input>
+                                      prefix-icon="el-icon-user" clearable hide-required-asterisk></el-input>
                         </el-form-item>
-                        <el-form-item prop="password">
+                        <el-form-item prop="userPwd">
                             <el-input v-model="loginForm.userPwd" size="medium" placeholder="请输入登录密码"
-                                      prefix-icon="el-icon-lock" clearable show-password></el-input>
+                                      prefix-icon="el-icon-lock" clearable show-password hide-required-asterisk></el-input>
                         </el-form-item>
                         <el-form-item prop="captcha">
-                            <el-row>
-                                <el-col :span="16">
+                            <el-row style="height: 40px;">
+                                <el-col :span="16" style="height: 36px;">
                                     <el-input v-model="loginForm.captcha" size="medium" placeholder="请输入验证码"
-                                              prefix-icon="el-icon-lock" clearable>
+                                              prefix-icon="el-icon-lock" clearable hide-required-asterisk>
                                     </el-input>
                                 </el-col>
                                 <el-col :span="8">
@@ -29,7 +29,7 @@
                             </el-row>
                         </el-form-item>
                         <el-form-item>
-                            <el-button class="login-button" type="primary" @click.native.prevent="toLogin">登录</el-button>
+                            <el-button style="margin-top: 20px" class="login-button" type="primary" @click.native.prevent="toLogin">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -42,7 +42,7 @@
     import {loginApi, captchaApi} from '@/api/system/User'
     import md5 from 'js-md5'
     import {reactive, ref} from "@vue/reactivity";
-    import {onMounted} from "@vue/runtime-core";
+    import {getCurrentInstance, onMounted} from "@vue/runtime-core";
     import { ElMessage } from 'element-plus'
     import { useRouter } from "vue-router";
 
@@ -55,6 +55,9 @@
      * 使用reactive不可以直接将整个对象赋值为另一个对象, 会导致reactive属性失效
      * 使用ref赋值使需要加上 .value 后赋值
      */
+
+    const loginRef = ref()
+
     const loginForm = reactive({
         userAcc: '',
         userPwd: '',
@@ -78,24 +81,33 @@
             message: '请输入登录密码',
             trigger: ['blur', 'change']
         }],
+        captcha: [{
+            required: true,
+            message: '请输入验证码',
+            trigger: ['blur', 'change']
+        }]
     }
 
     const router = useRouter()
 
     const toLogin = () => {
-        let md5Login = Object.assign({}, loginForm)
-        md5Login.userPwd = md5(md5Login.userPwd)
-        loginApi(md5Login).then(res => {
-            ElMessage({
-                message: res.msg,
-                type: 'success'
-            })
-            router.push({
-                name: 'index',
-                path: '/index'
-            })
-        }).catch(err => {
-            getCaptcha()
+        loginRef.value.validate((valid) => {
+            if(valid) {
+                let md5Login = Object.assign({}, loginForm)
+                md5Login.userPwd = md5(md5Login.userPwd)
+                loginApi(md5Login).then(res => {
+                    ElMessage({
+                        message: res.msg,
+                        type: 'success'
+                    })
+                    router.push({
+                        name: 'home',
+                        path: '/home'
+                    })
+                }).catch(err => {
+                    getCaptcha()
+                })
+            }
         })
     }
 
@@ -117,7 +129,7 @@
         width: 100%;
         height: 100%;
         background-size: 100%;
-        background-image: url("@/assets/bg.jpg");
+        background-image: url("@/assets/img/bg.jpg");
     }
 
     @keyframes animated-border {
@@ -143,7 +155,7 @@
     .login-box-left {
         width: 50%;
         background-color: #D1E5F0;
-        background-image: url("@/assets/login.png");
+        background-image: url("@/assets/img/login.png");
         background-repeat: no-repeat;
         padding: 0;
         border-radius: 10px;
